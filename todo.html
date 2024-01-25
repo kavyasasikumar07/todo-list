@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <style>
+        body {
+        font-family: 'Verdana', sans-serif; /* Change to your desired font */
+        background-color: lavender; /* Change the background color to lavender */
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #todo-header {
+        padding: 20px;
+        background-color: #1565c0; /* Default blue color for the header */
+        color: #fff;
+        text-align: center;
+        font-size: 24px;
+        transition: background-color 0.3s; /* Add a smooth transition effect */
+    }
+
+    #todo-header:hover {
+        background-color: #004080; /* Change the header color on hover */
+    }
+
+
+        #todo-container {
+            width: 400px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+      
+    
+        #todo-list {
+            padding: 20px;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .todo-item input {
+            margin-right: 10px;
+        }
+
+        .todo-item button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #todo-footer {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #addTodo {
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-top: 1px solid #ddd;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="todo-container">
+    <div id="todo-header">
+        ToDo App
+    </div>
+    <div id="todo-list">
+        <!-- ToDo items will be added here dynamically -->
+    </div>
+    <div id="todo-footer">
+        <input type="text" id="addTodo" placeholder="Add a new ToDo">
+    </div>
+</div>
+
+<script>
+    // JavaScript code for ToDo functionality using DOM
+    document.addEventListener("DOMContentLoaded", function () {
+        const todoList = document.getElementById("todo-list");
+        const addTodoInput = document.getElementById("addTodo");
+
+        addTodoInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                addTodo();
+            }
+        });
+
+        function addTodo() {
+            const todoText = addTodoInput.value.trim();
+            if (todoText !== "") {
+                const todoItem = createTodoItem(todoText);
+                todoList.appendChild(todoItem);
+                addTodoInput.value = "";
+            }
+        }
+
+        function createTodoItem(text) {
+            const todoItem = document.createElement("div");
+            todoItem.className = "todo-item";
+
+            const todoCheckbox = document.createElement("input");
+            todoCheckbox.type = "checkbox";
+
+            const todoText = document.createElement("span");
+            todoText.textContent = text;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", function () {
+                todoList.removeChild(todoItem);
+            });
+
+            todoItem.appendChild(todoCheckbox);
+            todoItem.appendChild(todoText);
+            todoItem.appendChild(deleteButton);
+
+            return todoItem;
+        }
+    });
+</script>
+
+</body>
+</html>
